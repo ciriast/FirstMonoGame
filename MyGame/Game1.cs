@@ -8,6 +8,8 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private Texture2D pixel;
+    private Rectangle MyRectangle;
 
     public Game1()
     {
@@ -27,7 +29,10 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
+        pixel =  new Texture2D(GraphicsDevice, 1, 1);
+        pixel.SetData<Color>(new Color [] {Color.White});
+
+        MyRectangle = new Rectangle(0, 0, 300, 300);
     }
 
     protected override void Update(GameTime gameTime)
@@ -44,8 +49,10 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
-
+        _spriteBatch.Begin();
+        _spriteBatch.Draw(pixel, MyRectangle, Color.Red);
+        _spriteBatch.End();
+        
         base.Draw(gameTime);
     }
 }
