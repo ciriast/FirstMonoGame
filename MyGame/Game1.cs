@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,6 +11,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private Texture2D pixel;
     private Rectangle MyRectangle;
+    private Vector2 ballPosition;
 
     public Game1()
     {
@@ -21,7 +23,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
-
+        ballPosition = new Vector2(0, 0);
         base.Initialize();
     }
 
@@ -40,7 +42,12 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        var kstate = Keyboard.GetState();
+
+        if (kstate.IsKeyDown(Keys.Up))
+        {
+            ballPosition.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
 
         base.Update(gameTime);
     }
@@ -50,7 +57,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(pixel, MyRectangle, Color.Red);
+        _spriteBatch.Draw(pixel, ballPosition, MyRectangle, Color.Red);
         _spriteBatch.End();
         
         base.Draw(gameTime);
